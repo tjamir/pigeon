@@ -10,14 +10,12 @@ import javax.servlet.http.HttpSession;
 import org.apache.http.client.ClientProtocolException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import br.eng.mosaic.pigeon.common.domain.SocialNetwork.Social;
 import br.eng.mosaic.pigeon.common.dto.UserInfo;
-import br.eng.mosaic.pigeon.server.controller.HomeController.uri;
+import br.eng.mosaic.pigeon.server.exception.ServerCrashException;
 import br.eng.mosaic.pigeon.server.helper.MimeType;
 import br.eng.mosaic.pigeon.server.service.UserService;
 import br.eng.mosaic.pigeon.server.socialnetwork.FacebookClient;
@@ -26,10 +24,15 @@ import br.eng.mosaic.pigeon.server.socialnetwork.FacebookClient;
 public class FacebookController extends AbstractSocialController {
 	
 	protected interface uri_fb {
+		String redir = "redirect:";
 		String sign_in = "oauth/facebook/signIn.do";
+		
+		String widget_sign_in = "oauth/facebook/widgetSignIn.do";
 		String sign_callback = "oauth/facebook/callback.do";
 		String photo = "{user_id}/oauth/facebook/photo.do";
 		String publish = "{user_id}/oauth/facebook/publish.do";
+		String widget_sign_callback = "oauth/facebook/widgetCallback.do";
+		String widget_url="http://pigeohunting.appspot.com";
 	}
 
 	@Autowired private FacebookClient facebookClient;
@@ -37,21 +40,42 @@ public class FacebookController extends AbstractSocialController {
 
 	@RequestMapping( uri_fb.sign_in )
 	public String sign_in(HttpSession session) throws MalformedURLException {
-		return uri.redir + facebookClient.getUrlCodeKnowUser(uri_fb.sign_callback);
+		
+		return uri_fb.redir + facebookClient.getUrlCodeKnowUser(uri_fb.sign_callback);
+	}
+	
+	@RequestMapping( uri_fb.widget_sign_in )
+	public String widget_sign_in(HttpSession session) throws MalformedURLException {
+		return uri_fb.redir + facebookClient.getUrlCodeKnowUser(uri_fb.widget_sign_callback);
 	}
 	
 	@RequestMapping( uri_fb.sign_callback )
-	public void callback( @RequestParam(value = "code") String hash,
-			HttpSession session, HttpServletResponse response ) throws IOException {
+	public String callback( @RequestParam(value = "code") String hash,
+			HttpSession session, HttpServletResponse response ) {
 
 		if ( hash == null || hash.isEmpty() )
 			ack_error(response, "erro ao autenticar com server facebook");
-
-		UserInfo user = facebookClient.getUser(uri_fb.sign_callback, hash);
-		userService.connect(user);
-		session.setAttribute(user.email, user);
 		
-		ack_ok(response, user.email);
+		UserInfo user = facebookClient.getUser(uri_fb.sign_callback, hash);
+		userService.connect(user); 
+		session.setAttribute(user.id, user);
+		
+		return "redirect:/" + user.id + "/welcome.do";
+	}
+	
+	@RequestMapping( uri_fb.widget_sign_callback )
+	public String widget_callback( @RequestParam(value = "code") String hash,
+			HttpSession session, HttpServletResponse response ) {
+
+		if ( hash == null || hash.isEmpty() )
+			ack_error(response, "erro ao autenticar com server facebook");
+		
+		UserInfo user = facebookClient.getUser(uri_fb.widget_sign_callback, hash);
+		userService.connect(user); 
+		session.setAttribute(user.id, user);
+		session.setAttribute("userInfo", user);
+		
+		return "redirect:"+ uri_fb.widget_url;
 	}
 
 	@RequestMapping( uri_fb.photo )
@@ -59,15 +83,13 @@ public class FacebookController extends AbstractSocialController {
 			throws ClientProtocolException, URISyntaxException, IOException {
 
 		UserInfo user = getUser(session, user_id);
-		String token = user.get( Social.facebook ).token;
-
-		byte[] photo = facebookClient.getPicture( token );
+		byte[] photo = facebookClient.getPicture( user.token );
 		download(response, MimeType.image_png, photo );
 	}
 	
 	@RequestMapping( uri_fb.publish )
 	public void publish( @PathVariable String user_id, HttpSession session, HttpServletResponse response,
-			@RequestParam(value = "message") String message ) throws IOException, URISyntaxException {
+			@RequestParam(value = "message") String message ) throws IOException, URISyntaxException, ServerCrashException {
 		
 		UserInfo user = getUser(session, user_id);
 		String doc_id = facebookClient.publish(user, message);
@@ -82,15 +104,4 @@ public class FacebookController extends AbstractSocialController {
 		this.userService = userService;
 	}
 	
-	@ExceptionHandler(RuntimeException.class) public void handleException(
-			RuntimeException e, HttpServletResponse response) {
-		System.out.println( e.getMessage() );
-		System.out.println( response );
-	}
-	
-	@RequestMapping( "test.do" )
-	public void test() {
-		throw new RuntimeException();
-	}
-
 }
