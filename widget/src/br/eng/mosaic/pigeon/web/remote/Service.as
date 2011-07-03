@@ -59,9 +59,8 @@ package br.eng.mosaic.pigeon.web.remote
 		}
 		
 		
-		public function getUserData(username:String):AsyncToken{
+		public function getUserData():AsyncToken{
 			var data:Object=new Object();
-			data.username=username;
 			var token:AsyncToken=HTTPService(operations["getUserData"]).send(data);
 			return token;
 		}

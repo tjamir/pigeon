@@ -1,16 +1,15 @@
 package br.eng.mosaic.pigeon.web.world
 {
+	import br.eng.mosaic.pigeon.web.ScoreManager;
 	import br.eng.mosaic.pigeon.web.entities.Enemy;
 	import br.eng.mosaic.pigeon.web.entities.Figean;
 	import br.eng.mosaic.pigeon.web.entities.Figeon;
 	import br.eng.mosaic.pigeon.web.entities.Pigeon;
 	import br.eng.mosaic.pigeon.web.entities.Sigeon;
-	import br.eng.mosaic.pigeon.web.entities.background.scenario1.Life;
 	import br.eng.mosaic.pigeon.web.entities.background.scenario1.*;
+	import br.eng.mosaic.pigeon.web.entities.background.scenario1.Life;
 	import br.eng.mosaic.pigeon.web.entities.background.transition.*;
 	import br.eng.mosaic.pigeon.web.ui.*;
-	
-	import br.eng.mosaic.pigeon.web.ScoreManager;
 	
 	import flash.geom.Point;
 	
@@ -46,6 +45,8 @@ package br.eng.mosaic.pigeon.web.world
 			
 		}
 		
+		public var message:String;
+		
 		public function createHud():void{
 			switch (pigeonType) {
 				case FIGEON:
@@ -68,6 +69,7 @@ package br.eng.mosaic.pigeon.web.world
 		
 		public override function begin():void{
 			
+			this.message = CatchThePigeon(FP.engine).message;
 			switch (pigeonType) {
 				case FIGEON:
 					pigeon = new Figeon();
@@ -154,5 +156,11 @@ package br.eng.mosaic.pigeon.web.world
 			scoreLabel.text = ScoreManager.getInstance().getScore().toString();
 			
 		}
+		
+		override public function end():void{
+			
+		}
+		
+	
 	}
 }

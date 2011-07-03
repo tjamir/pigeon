@@ -38,6 +38,9 @@ package
 		
 		public var soundEnabled:Boolean=true;
 		
+		
+		public var message:String;
+		
 		public function CatchThePigeon()
 		{
 			super(760,600, 60, false);
@@ -61,10 +64,10 @@ package
 		}
 		
 		override public function init():void {
-			var paramObj:Object = LoaderInfo(this.root.loaderInfo).parameters;
-			userName = paramObj.userName;
+		
+		
 			if(service){
-				service.getUserData(userName).addResponder(new Responder(usernameResult, communcationFault));
+				service.getUserData().addResponder(new Responder(usernameResult, communcationFault));
 			}
 		}
 		

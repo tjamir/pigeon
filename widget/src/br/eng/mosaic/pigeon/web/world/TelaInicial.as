@@ -27,9 +27,9 @@ package br.eng.mosaic.pigeon.web.world
 	public class  TelaInicial extends World {
 		
 		public static var pontuacao:int = 0;
-		var mensagem = "";
-		var textoDoUsuario:Text;
-		var userTextEntity:Entity ;
+		public var mensagem:String = "";
+		public var textoDoUsuario:Text;
+		public var userTextEntity:Entity ;
 		public var cursor:Cursor=new Cursor;
 		
 		private var textArea:PunkTextArea;
@@ -47,7 +47,7 @@ package br.eng.mosaic.pigeon.web.world
 			TransitionScreen.bkg_music = bkg_music;
 		}
 		
-		private function createBackground(){
+		private function createBackground():void{
 			var obj:Entity;
 			
 			add(new Bg());
@@ -75,12 +75,14 @@ package br.eng.mosaic.pigeon.web.world
 			
 		}
 		
+		
+		private const initText:String="<Put Message Here>";
+		
 		override public function begin():void 
 		{
 			createBackground();
 			
-			textArea = new PunkTextArea("<Put Message Here>", FP.width/2 - 160, FP.height - 65, 300, 65, new WhiteAfterlife);
-			//textArea = new PunkTextArea("Cade a merda do texto, kct!?!?!?", 0, FP.height - 100, 300, 100);
+			textArea = new PunkTextArea(initText, FP.width/2 - 160, FP.height - 65, 300, 65, new WhiteAfterlife);
 			
 			add(textArea); 
 			
@@ -93,6 +95,14 @@ package br.eng.mosaic.pigeon.web.world
 	
 			
 			super.begin();
+		}
+		
+		override public function end():void{
+			if(textArea.text != initText){
+				CatchThePigeon(FP.engine).message=textArea.text;	
+			}else{
+				CatchThePigeon(FP.engine).message=null;
+			}
 		}
 	
 		

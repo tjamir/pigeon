@@ -11,14 +11,28 @@ package br.eng.mosaic.pigeon.web.world
 	import br.eng.mosaic.pigeon.web.entities.background.Sigeon;
 	import br.eng.mosaic.pigeon.web.entities.background.Twitter;
 	import br.eng.mosaic.pigeon.web.entities.background.UserMessage;
+	import br.eng.mosaic.pigeon.web.entities.background.selection.*;
 	import br.eng.mosaic.pigeon.web.entities.background.transition.*;
 	
-	import br.eng.mosaic.pigeon.web.entities.background.selection.*;
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
+	import flash.display.Loader;
+	import flash.display.LoaderInfo;
+	import flash.events.Event;
+	import flash.events.HTTPStatusEvent;
+	import flash.net.URLLoader;
+	import flash.net.URLLoaderDataFormat;
+	import flash.net.URLRequest;
+	import flash.utils.ByteArray;
+	
+	import mx.controls.Image;
+	import mx.core.ClassFactory;
 	
 	import net.flashpunk.Entity;
 	import net.flashpunk.FP;
 	import net.flashpunk.Sfx;
 	import net.flashpunk.World;
+	import net.flashpunk.graphics.Image;
 	import net.flashpunk.graphics.Text;
 	import net.flashpunk.utils.Input;
 	
@@ -78,11 +92,11 @@ package br.eng.mosaic.pigeon.web.world
 			add(go);
 			
 			//TODO Ajeitar a posição para aparecer bonitinho
-			add(new Avatar(450, 20));
-			add(new Avatar(550, 20));
-			add(new Avatar(650, 20));
-			add(new Avatar(450, 150));
-			add(new Avatar(550, 150));
+			add(new Avatar(450, 20, "http://a0.twimg.com/profile_images/702642138/foto-rafa-1_normal.png"));
+			add(new Avatar(550, 20, "http://a0.twimg.com/profile_images/702642138/foto-rafa-1_normal.png"));
+			add(new Avatar(650, 20, "http://a0.twimg.com/profile_images/702642138/foto-rafa-1_normal.png"));
+			add(new Avatar(450, 150, "http://a0.twimg.com/profile_images/702642138/foto-rafa-1_normal.png"));
+			add(new Avatar(550, 150, "http://a0.twimg.com/profile_images/702642138/foto-rafa-1_normal.png"));
 			
 			//add(new Star(210,10));
 			
@@ -111,7 +125,16 @@ package br.eng.mosaic.pigeon.web.world
 			backButton = new BackToStart(20, FP.height*1/2 + 240);
 			add (backButton);
 			
+		
+			
+			
+			
+			
 		}
+		
+	
+		
+		
 
 		private function getPigeon(x:int, y:int):Entity
 		{
@@ -126,11 +149,13 @@ package br.eng.mosaic.pigeon.web.world
 			return null;
 		}
 		
+		private const initText:String="<Put Message Here>";
+		
 		override public function begin():void 
 		{
 			createBackground();
 			
-			textArea = new PunkTextArea("<Put Message Here>", FP.width/2 - 150, FP.height - 65, 300, 65, new WhiteAfterlife);
+			textArea = new PunkTextArea(initText, FP.width/2 - 150, FP.height - 65, 300, 65, new WhiteAfterlife);
 			
 			add(textArea); 
 			
@@ -199,6 +224,13 @@ package br.eng.mosaic.pigeon.web.world
 			this.bringForward(cursor);
 		}
 		
+		override public function end():void{
+			if(textArea.text != initText){
+				CatchThePigeon(FP.engine).message=textArea.text;	
+			}else{
+				CatchThePigeon(FP.engine).message=null;
+			}
+		}
 	}
 	
 }
