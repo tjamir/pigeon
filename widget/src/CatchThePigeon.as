@@ -1,6 +1,7 @@
 
 package
 {
+	import br.eng.mosaic.pigeon.web.model.PigeonModel;
 	import br.eng.mosaic.pigeon.web.remote.FbHandler;
 	import br.eng.mosaic.pigeon.web.remote.Service;
 	import br.eng.mosaic.pigeon.web.remote.dto.UserInfo;
@@ -40,6 +41,11 @@ package
 		
 		
 		public var message:String;
+		
+		private var _model:PigeonModel;
+		
+		
+		
 		
 		public function CatchThePigeon()
 		{

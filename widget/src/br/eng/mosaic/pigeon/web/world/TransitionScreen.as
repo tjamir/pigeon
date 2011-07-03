@@ -92,7 +92,7 @@ package br.eng.mosaic.pigeon.web.world
 			add(go);
 			
 			//TODO Ajeitar a posição para aparecer bonitinho
-			add(new Avatar(450, 20, "http://a0.twimg.com/profile_images/702642138/foto-rafa-1_normal.png"));
+			add(new Avatar(450, 20, "http://a0.twimg.com/profile_images/702642138/foto-rafa-1_normal.png", "1500"));
 			add(new Avatar(550, 20, "http://a0.twimg.com/profile_images/702642138/foto-rafa-1_normal.png"));
 			add(new Avatar(650, 20, "http://a0.twimg.com/profile_images/702642138/foto-rafa-1_normal.png"));
 			add(new Avatar(450, 150, "http://a0.twimg.com/profile_images/702642138/foto-rafa-1_normal.png"));

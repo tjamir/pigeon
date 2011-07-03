@@ -14,12 +14,16 @@ package br.eng.mosaic.pigeon.web.entities.background
 	import net.flashpunk.Graphic;
 	import net.flashpunk.Mask;
 	import net.flashpunk.graphics.Image;
+	import net.flashpunk.graphics.Text;
+	
+	import punk.ui.PunkLabel;
+	import punk.ui.skins.WhiteAfterlife;
 	
 	public class Avatar extends Entity 	{
 		
 		[Embed(source = 'br/eng/mosaic/pigeon/web/assets/picture_of_avatar.png')] private const IMAGE:Class;
 		
-		public function Avatar(x:Number=0, y:Number=0, url:String=null, graphic:Graphic=null, mask:Mask=null){
+		public function Avatar(x:Number=0, y:Number=0, url:String=null, score:String=null, graphic:Graphic=null, mask:Mask=null){
 			//super(x, y, graphic, mask);
 			super(x, y, graphic, mask);
 			var image:Image = new Image(IMAGE);
@@ -31,6 +35,24 @@ package br.eng.mosaic.pigeon.web.entities.background
 				loadImage(url);
 			}
 			
+			if(score){
+				showScore(score);
+			}
+			
+			
+		}
+
+		private function showScore(score:String):void
+		{
+			var text:Text = new Text(score);		
+			var posX:int = x+(width-text.width)/2;
+			var posY:int = y+ (height-text.height)/2;
+			
+			//var e:Entity = new Entity(posX,posY, text);
+			this.addGraphic(text);
+//			FP.world.add(e);
+//			FP.world.bringToFront(e);
+//			FP.world.sendBackward(this);
 			
 		}
 		
