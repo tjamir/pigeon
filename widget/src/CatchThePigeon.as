@@ -52,12 +52,12 @@ package
 			super(760,600, 60, false);
 			Mouse.hide();
 			FP.world = new TelaInicial;
+			var parameters:Object=this.root.loaderInfo.parameters;
 			//FP.world = new PigeonSelection;
 			//FP.world = new MyWorld;
 			engine=this;
-			
 		}
-		
+	
 		public function get service():Service
 		{
 			_service= new Service();

@@ -9,9 +9,9 @@ package br.eng.mosaic.pigeon.web.model
 		private var topFive:Array = new Array[5];
 		private var userID:String;
 	
-		private static var instance:PigeonModel = new PigeonModel(new SingletonRestrictor());
+		private static var instance:PigeonModel = new PigeonModel();
 		
-		public function PigeonModel(restrictor:SingletonRestrictor){}
+		public function PigeonModel(){}
 		
 		public static function getInstance():PigeonModel{
 			return instance;
@@ -39,4 +39,3 @@ package br.eng.mosaic.pigeon.web.model
 	}
 }
 
-class SingletonRestrictor{} 
