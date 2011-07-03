@@ -3,7 +3,7 @@ package br.eng.mosaic.pigeon.web
 	public class ScoreManager
 	{
 		
-		private static var instance:ScoreManager = new ScoreManager();
+		private static var instance:ScoreManager = new ScoreManager(new SingletonRestrictor());
 		private var score:int = 0;
 		
 		public static var ENEMYDOWN:int = 1;
@@ -13,9 +13,8 @@ package br.eng.mosaic.pigeon.web
 			return instance;
 		}
 		
-		public function ScoreManager()
-		{
-		}
+		
+		public function ScoreManager(restrictor:SingletonRestrictor){}
 		
 		/**
 		 * Type can be: ENEMYDOWN or LEVELCLEAR. Level is the level where event occurs
@@ -36,3 +35,5 @@ package br.eng.mosaic.pigeon.web
 		}
 	}
 }
+
+class SingletonRestrictor{} 

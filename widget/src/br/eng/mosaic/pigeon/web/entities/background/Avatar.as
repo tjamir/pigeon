@@ -30,7 +30,6 @@ package br.eng.mosaic.pigeon.web.entities.background
 			this.graphic = image;
 			this.setHitboxTo(image);
 			
-			
 			if(url){
 				loadImage(url);
 			}
@@ -38,13 +37,19 @@ package br.eng.mosaic.pigeon.web.entities.background
 			if(score){
 				showScore(score);
 			}
-			
-			
 		}
 
 		private function showScore(score:String):void
 		{
-			var text:Text = new Text(score);		
+			
+			var scoreLabel:PunkLabel = new PunkLabel(score, 705, 70, 1, 1, new WhiteAfterlife);
+			FP.world.add(scoreLabel);
+			scoreLabel.x = this.x;
+			scoreLabel.y = this.y + 100;
+			
+			//this.addGraphic(scoreLabel);
+			
+			/*var text:Text = new Text(score);		
 			var posX:int = x+(width-text.width)/2;
 			var posY:int = y+ (height-text.height)/2;
 			
@@ -54,6 +59,7 @@ package br.eng.mosaic.pigeon.web.entities.background
 //			FP.world.bringToFront(e);
 //			FP.world.sendBackward(this);
 			
+			*/
 		}
 		
 		private var loader:URLLoader;

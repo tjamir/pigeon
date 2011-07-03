@@ -93,10 +93,10 @@ package br.eng.mosaic.pigeon.web.world
 			
 			//TODO Ajeitar a posição para aparecer bonitinho
 			add(new Avatar(450, 20, "http://a0.twimg.com/profile_images/702642138/foto-rafa-1_normal.png", "1500"));
-			add(new Avatar(550, 20, "http://a0.twimg.com/profile_images/702642138/foto-rafa-1_normal.png"));
-			add(new Avatar(650, 20, "http://a0.twimg.com/profile_images/702642138/foto-rafa-1_normal.png"));
-			add(new Avatar(450, 150, "http://a0.twimg.com/profile_images/702642138/foto-rafa-1_normal.png"));
-			add(new Avatar(550, 150, "http://a0.twimg.com/profile_images/702642138/foto-rafa-1_normal.png"));
+			add(new Avatar(550, 20, "http://a0.twimg.com/profile_images/702642138/foto-rafa-1_normal.png", "1400"));
+			add(new Avatar(650, 20, "http://a0.twimg.com/profile_images/702642138/foto-rafa-1_normal.png", "1300"));
+			add(new Avatar(450, 150, "http://a0.twimg.com/profile_images/702642138/foto-rafa-1_normal.png","1200"));
+			add(new Avatar(550, 150, "http://a0.twimg.com/profile_images/702642138/foto-rafa-1_normal.png", "1100"));
 			
 			//add(new Star(210,10));
 			
