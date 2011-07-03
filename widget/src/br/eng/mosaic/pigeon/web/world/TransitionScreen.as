@@ -209,10 +209,10 @@ package br.eng.mosaic.pigeon.web.world
 						FP.world = new TelaInicial;
 						break;
 					case 2:
-						FP.world = new Scenario1(1);
+						FP.world = new Scenario1(pigeonType);
 						break;
 					case 3:
-						FP.world = new Scenario2(1);
+						FP.world = new Scenario2(pigeonType);
 						break;
 				}
 			}
