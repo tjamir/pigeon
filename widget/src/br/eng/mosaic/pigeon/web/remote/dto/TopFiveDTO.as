@@ -6,13 +6,13 @@ package br.eng.mosaic.pigeon.web.remote.dto
 	{
 		
 		private var score:int;
-		private var photo:ByteArray;
+		private var photo:String;
 		
 		public function getScore():int{
 			return score;
 		}
 		
-		public function getPhoto():ByteArray{
+		public function getPhoto():String{
 			return photo;
 		}
 
@@ -20,7 +20,7 @@ package br.eng.mosaic.pigeon.web.remote.dto
 			this.score = score;
 		}
 		
-		public function setPhoto(photo:ByteArray){
+		public function setPhoto(photo:String){
 			this.photo = photo;
 		}
 		

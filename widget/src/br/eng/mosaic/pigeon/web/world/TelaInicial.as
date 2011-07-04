@@ -2,8 +2,11 @@ package br.eng.mosaic.pigeon.web.world
 {
 	import br.eng.mosaic.pigeon.web.entities.Cursor;
 	import br.eng.mosaic.pigeon.web.entities.FacebookConfig;
+	import br.eng.mosaic.pigeon.web.entities.Pigeon;
 	import br.eng.mosaic.pigeon.web.entities.PlayButton;
 	import br.eng.mosaic.pigeon.web.entities.background.*;
+	import br.eng.mosaic.pigeon.web.model.PigeonModel;
+	import br.eng.mosaic.pigeon.web.remote.dto.TopFiveDTO;
 	
 	import com.facebook.graph.Facebook;
 	
@@ -59,20 +62,46 @@ package br.eng.mosaic.pigeon.web.world
 			obj.y = FP.height - 100; //obj.height;
 			add(obj);
 			
-			add(new Avatar(150, 20));
-			add(new Avatar(250, 20));
-			add(new Avatar(350, 20));
-			add(new Avatar(450, 20));
-			add(new Avatar(550, 20));
+		
 			
-			add(new Star(210,10));
 			
 			add (new Help(620,415));
 			
-			add (new Twitter(20, FP.height * 1/2));
 			add (new FacebookButton(20, FP.height * 1/2 + 70));
+			initAvatar();
 			//add (new Pause(100, FP.height*1/2 + 240));
 			
+		}
+		
+		public function initAvatar():void{
+			
+			var model:PigeonModel = PigeonModel.getInstance();
+			if(model.topFive[0]){
+				
+				addAvatar(150, 20, model.topFive[0] as TopFiveDTO);
+			}
+			if(model.topFive[1]){
+				
+				addAvatar(250, 20, model.topFive[1] as TopFiveDTO);
+			}
+			if(model.topFive[2]){
+				
+				addAvatar(350, 20, model.topFive[2] as TopFiveDTO);
+			}
+			if(model.topFive[3]){
+				
+				addAvatar(450, 20, model.topFive[3] as TopFiveDTO);
+			}
+			if(model.topFive[4]){
+				
+				addAvatar(550, 20, model.topFive[4] as TopFiveDTO);
+			}
+			
+		}
+		
+		private function addAvatar(x:int, y:int, dto:TopFiveDTO):void{
+		
+			add(new Avatar(x, y, dto.getPhoto(), dto.getScore().toString()));
 		}
 		
 		

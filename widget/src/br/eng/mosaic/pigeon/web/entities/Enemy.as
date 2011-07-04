@@ -1,9 +1,10 @@
 package br.eng.mosaic.pigeon.web.entities 
 {
+	import br.eng.mosaic.pigeon.web.ScoreManager;
 	import br.eng.mosaic.pigeon.web.world.MyWorld;
 	import br.eng.mosaic.pigeon.web.world.TelaInicial;
 	
-	import br.eng.mosaic.pigeon.web.ScoreManager;
+	import flash.net.navigateToURL;
 	
 	import net.flashpunk.Entity;
 	import net.flashpunk.Graphic;

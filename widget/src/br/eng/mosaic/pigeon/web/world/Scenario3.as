@@ -119,6 +119,7 @@ package br.eng.mosaic.pigeon.web.world
 		}
 		override public function end():void{
 			bkg_music.stop();
+			super.end();
 		}
 		
 		override public function update():void{
