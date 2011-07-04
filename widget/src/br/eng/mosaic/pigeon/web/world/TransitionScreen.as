@@ -14,6 +14,7 @@ package br.eng.mosaic.pigeon.web.world
 	import br.eng.mosaic.pigeon.web.entities.background.selection.*;
 	import br.eng.mosaic.pigeon.web.entities.background.transition.*;
 	import br.eng.mosaic.pigeon.web.model.PigeonModel;
+	import br.eng.mosaic.pigeon.web.remote.dto.TopFiveDTO;
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -98,12 +99,7 @@ package br.eng.mosaic.pigeon.web.world
 			go = new Go(415, 380);
 			add(go);
 			
-			//TODO Ajeitar a posição para aparecer bonitinho
-			add(new Avatar(450, 20, "http://a0.twimg.com/profile_images/702642138/foto-rafa-1_normal.png", "1500"));
-			add(new Avatar(550, 20, "http://a0.twimg.com/profile_images/702642138/foto-rafa-1_normal.png", "1400"));
-			add(new Avatar(650, 20, "http://a0.twimg.com/profile_images/702642138/foto-rafa-1_normal.png", "1300"));
-			add(new Avatar(450, 150, "http://a0.twimg.com/profile_images/702642138/foto-rafa-1_normal.png","1200"));
-			add(new Avatar(550, 150, "http://a0.twimg.com/profile_images/702642138/foto-rafa-1_normal.png", "1100"));
+			initAvatar();
 			
 			//add(new Star(210,10));
 			
@@ -141,7 +137,36 @@ package br.eng.mosaic.pigeon.web.world
 		
 	
 		
+		public function initAvatar():void{
+			
+			var model:PigeonModel = PigeonModel.getInstance();
+			if(model.topFive[0]){
+				
+				addAvatar(450, 20, model.topFive[0] as TopFiveDTO);
+			}
+			if(model.topFive[1]){
+				
+				addAvatar(550, 20, model.topFive[1] as TopFiveDTO);
+			}
+			if(model.topFive[2]){
+				
+				addAvatar(650, 20, model.topFive[2] as TopFiveDTO);
+			}
+			if(model.topFive[3]){
+				
+				addAvatar(450, 150, model.topFive[3] as TopFiveDTO);
+			}
+			if(model.topFive[4]){
+				
+				addAvatar(550, 150, model.topFive[4] as TopFiveDTO);
+			}
+			
+		}
 		
+		private function addAvatar(x:int, y:int, dto:TopFiveDTO):void{
+			
+			add(new Avatar(x, y, dto.getPhoto(), dto.getScore().toString()));
+		}
 
 		private function getPigeon(x:int, y:int):Entity
 		{

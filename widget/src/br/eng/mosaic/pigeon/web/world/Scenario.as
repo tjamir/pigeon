@@ -9,11 +9,15 @@ package br.eng.mosaic.pigeon.web.world
 	import br.eng.mosaic.pigeon.web.entities.background.scenario1.*;
 	import br.eng.mosaic.pigeon.web.entities.background.scenario1.Life;
 	import br.eng.mosaic.pigeon.web.entities.background.transition.*;
+	import br.eng.mosaic.pigeon.web.remote.Service;
 	import br.eng.mosaic.pigeon.web.ui.*;
 	
 	import flash.geom.Point;
 	
 	import mx.collections.IList;
+	import mx.rpc.Responder;
+	import mx.rpc.events.FaultEvent;
+	import mx.rpc.events.ResultEvent;
 	
 	import net.flashpunk.FP;
 	import net.flashpunk.World;
@@ -158,6 +162,16 @@ package br.eng.mosaic.pigeon.web.world
 		}
 		
 		override public function end():void{
+			if(message){
+				CatchThePigeon(FP.engine).service.publish(message).addResponder(new Responder(messageSent, faultHandler));
+			}
+		}
+		
+		private function messageSent(result:ResultEvent):void{
+			
+		}
+		
+		private function faultHandler(result:FaultEvent):void{
 			
 		}
 		

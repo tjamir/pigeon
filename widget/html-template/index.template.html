@@ -37,13 +37,30 @@
         <script type="text/javascript" src="swfobject.js"></script>
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script> 
 		<script type="text/javascript" src="http://connect.facebook.net/en_US/all.js"></script>   
+		
         <script type="text/javascript">
+ 		
             <!-- For version detection, set to min. required Flash Player version, or 0 (or 0.0.0), for no version detection. --> 
             var swfVersionStr = "${version_major}.${version_minor}.${version_revision}";
             <!-- To use express install, set to playerProductInstall.swf, otherwise the empty string. -->
             var xiSwfUrlStr = "${expressInstallSwf}";
             var flashvars = {};
             var params = {};
+            var sURL = window.document.URL.toString();
+            if (sURL.indexOf("?") > 0){
+            var arrParams = sURL.split("?");
+           	var arrURLParams = arrParams[1].split("&");
+           	var arrParamNames = new Array(arrURLParams.length);
+          	var arrParamValues = new Array(arrURLParams.length);
+          	for (i=0;i<arrURLParams.length;i++)
+         {
+              var sParam =  arrURLParams[i].split("=");
+              arrParamNames[i] = sParam[0];
+              if (sParam[1] != "")
+                arrParamValues[i] = unescape(sParam[1]);
+            	flashvars[sParam[0]]=sParam[1];
+          }
+ 			}
             params.quality = "high";
             params.bgcolor = "${bgcolor}";
             params.allowscriptaccess = "always";
@@ -52,6 +69,7 @@
             attributes.id = "${application}";
             attributes.name = "${application}";
             attributes.align = "middle";
+            flashvars.userId="sdafasdf";
             swfobject.embedSWF(
                 "${swf}.swf", "flashContent", 
                 "${width}", "${height}", 

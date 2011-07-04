@@ -1,5 +1,6 @@
 package br.eng.mosaic.pigeon.web.remote
 {
+	import br.eng.mosaic.pigeon.web.model.PigeonModel;
 	import br.eng.mosaic.pigeon.web.remote.dto.PostarScoreDTO;
 	
 	import com.adobe.serialization.json.JSON;
@@ -22,9 +23,8 @@ package br.eng.mosaic.pigeon.web.remote
 			
 			operations["postarScore"]=createHttpService(serviceBaseUrl+"/postarScore");
 			operations["getUserData"]= createHttpService(serviceBaseUrl+"/getUserData.do");
-			
-			
-			
+			operations["publish"]= createHttpService(serviceBaseUrl+"/"+PigeonModel.getInstance().userID+"/oauth/facebook/publish.do");
+			operations["topFive"]=createHttpService("http://www.mosaic.eng.br/server/topfive.do");
 			
 		}
 		
@@ -53,15 +53,25 @@ package br.eng.mosaic.pigeon.web.remote
 			var token:AsyncToken=HTTPService(operations["postarScore"]).send(data);
 			return token;
 		}
-		
-		public function mashedPotato():AsyncToken{
-			return HTTPService(operations["mashedpotato"]).send();
-		}
+	
 		
 		
 		public function getUserData():AsyncToken{
 			var data:Object=new Object();
 			var token:AsyncToken=HTTPService(operations["getUserData"]).send(data);
+			return token;
+		}
+		
+		public function publish(message:String):AsyncToken{
+			var data:Object=new Object();
+			data.message = message;
+			var token:AsyncToken=HTTPService(operations["publish"]).send(data);
+			return token;
+		}
+		
+		public function topFive():AsyncToken{
+			var data:Object = new Object();
+			var token:AsyncToken=HTTPService(operations["topFive"]).send(data);
 			return token;
 		}
 	}

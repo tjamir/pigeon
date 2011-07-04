@@ -1,12 +1,12 @@
 package br.eng.mosaic.pigeon.web.world 
 {
+	import br.eng.mosaic.pigeon.web.ScoreManager;
 	import br.eng.mosaic.pigeon.web.entities.*;
 	import br.eng.mosaic.pigeon.web.entities.background.*;
 	import br.eng.mosaic.pigeon.web.entities.background.scenario1.*;
 	import br.eng.mosaic.pigeon.web.entities.background.scenario3.*;
 	import br.eng.mosaic.pigeon.web.entities.background.transition.*;
-	
-	import br.eng.mosaic.pigeon.web.ScoreManager;
+	import br.eng.mosaic.pigeon.web.model.PigeonModel;
 	
 	import flash.geom.Point;
 	
@@ -119,6 +119,7 @@ package br.eng.mosaic.pigeon.web.world
 		}
 		override public function end():void{
 			bkg_music.stop();
+			super.end();
 		}
 		
 		override public function update():void{
@@ -154,6 +155,8 @@ package br.eng.mosaic.pigeon.web.world
 			// go to transition screen
 			if (pigeon.finished){
 				ScoreManager.getInstance().updateScore(ScoreManager.LEVELCLEAR, 3);
+				//TODO send the message
+				PigeonModel.getInstance().setUserMessage("");
 				FP.world = new TransitionScreen(3, pigeonType);
 			}
 			

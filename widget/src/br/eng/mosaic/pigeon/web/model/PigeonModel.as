@@ -5,10 +5,12 @@ package br.eng.mosaic.pigeon.web.model
 	
 	public class PigeonModel
 	{
-		//5 position array of TopFiveDTO objects
-		private var topFive:Array;
-		private var userID:String;
+
 		private var userMessage:String;
+
+		//5 position array of TopFiveDTO objects
+		private var _topFive:Array = new Array();		
+		private var _userID:String;
 	
 		private static var instance:PigeonModel = new PigeonModel();
 		
@@ -18,16 +20,16 @@ package br.eng.mosaic.pigeon.web.model
 			return instance;
 		}
 		
-		public function getTopFive():Array{
-			return topFive;
+		public function get topFive():Array{
+			return _topFive;
 		}
 		
-		public function getScore():int{
+		public function get score():int{
 			return ScoreManager.getInstance().getScore();
 		}
 		
-		public function getUserID():String{
-			return userID;
+		public function get userID():String{
+			return _userID;
 		}
 		
 		public function getUserMessage():String{
@@ -38,12 +40,12 @@ package br.eng.mosaic.pigeon.web.model
 			this.userMessage = userMessage;
 		}
 		
-		public function setTopFive(topFive:Array){
-			this.topFive = topFive;
+		public function set topFive(topFive:Array):void{
+			this._topFive = topFive;
 		}
 		
-		public function setUserID(userID:String){
-			this.userID = userID;
+		public function set userID(userID:String):void{
+			this._userID = userID;
 		}
 	}
 }

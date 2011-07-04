@@ -3,12 +3,17 @@ package
 {
 	import br.eng.mosaic.pigeon.web.model.PigeonModel;
 	import br.eng.mosaic.pigeon.web.remote.Service;
+	import br.eng.mosaic.pigeon.web.remote.dto.TopFiveDTO;
 	import br.eng.mosaic.pigeon.web.remote.dto.UserInfo;
 	import br.eng.mosaic.pigeon.web.world.*;
 	
 	import com.adobe.serialization.json.JSON;
 	
 	import flash.net.URLRequest;
+	import flash.display.LoaderInfo;
+	import flash.display.Sprite;
+	import flash.net.FileFilter;
+	import flash.system.Security;
 	import flash.ui.Mouse;
 	
 	import mx.rpc.Responder;
@@ -51,6 +56,9 @@ package
 			var parameters:Object=this.root.loaderInfo.parameters;
 			//FP.world = new PigeonSelection;
 			//FP.world = new MyWorld;
+			if(parameters.userid){
+				PigeonModel.getInstance().userID = parameters.userid;
+			}
 			engine=this;
 		}
 	
@@ -67,9 +75,9 @@ package
 		
 		override public function init():void {
 		
-		
+		Security.allowDomain("http://www.mosaic.eng.br");
 			if(service){
-				service.getUserData().addResponder(new Responder(usernameResult, communcationFault));
+				service.topFive().addResponder(new Responder(usernameResult, communcationFault));
 			}
 		}
 		
@@ -80,17 +88,25 @@ package
 		
 		private function usernameResult(resultEvent:ResultEvent):void
 		{
-			var resultString:String=resultEvent.result as String;
-			var pos:int=resultString.indexOf(":");
-			var data:String = resultString.substr(pos+1);
+			var resultString:String=resultEvent.result.html.body.p as String;
 			
-			pos=data.indexOf("'");
-			data = data.substr(pos+1);
-			pos=data.lastIndexOf("'");
-			data = data.substr(0, pos);
 			
-			var object:Object=JSON.decode(data);
-			userinfo =new UserInfo(object);
+			var object:Object=JSON.decode(resultString);
+//			userinfo =new UserInfo(object);
+			var topFive:Object = object.sucess.topfive;
+			
+			for(var i:int=0;i<5;i++){
+				if(topFive[i]){
+					var player:TopFiveDTO=new TopFiveDTO();
+					player.setScore(topFive[i].score);
+					player.setPhoto(topFive[i].url);
+					PigeonModel.getInstance().topFive[i]=player;
+				}
+			}
+			
+			if(FP.world is TelaInicial){
+				TelaInicial(FP.world).initAvatar();
+			}
 			
 			
 			
