@@ -6,6 +6,7 @@ package br.eng.mosaic.pigeon.web.world
 	import br.eng.mosaic.pigeon.web.entities.background.*;
 	import br.eng.mosaic.pigeon.web.entities.background.selection.*;
 	import br.eng.mosaic.pigeon.web.entities.background.transition.*;
+	import br.eng.mosaic.pigeon.web.model.PigeonModel;
 	
 	import com.facebook.graph.Facebook;
 	
@@ -105,18 +106,16 @@ package br.eng.mosaic.pigeon.web.world
 			add (new FigeonSelection(290, 300));
 			add (new FigeanSelection(500, 200));
 			
-			
 		}
 		
 		override public function begin():void 
 		{
 			createBackground();
 			
-			textArea = new PunkTextArea("<Put Message Here>", FP.width/2 - 150, FP.height - 65, 300, 65, new WhiteAfterlife);
+			//textArea = new PunkTextArea(PigeonModel.getInstance().getUserMessage(), FP.width/2 - 150, FP.height - 65, 300, 65, new WhiteAfterlife);
+			textArea = new PunkTextArea(PigeonModel.getInstance().getUserMessage(), FP.width/2 - 150, FP.height - 65, 300, 65, new WhiteAfterlife);
 			
 			add(textArea); 
-			
-			
 			
 			if(!bkg_music){
 				bkg_music=new Sfx(BKG_MUSIC);
@@ -133,6 +132,7 @@ package br.eng.mosaic.pigeon.web.world
 		
 		public override function end():void{
 			bkg_music.stop();
+			PigeonModel.getInstance().setUserMessage(textArea.text);
 		}
 		
 		public function PigeonSelection() {
@@ -160,6 +160,10 @@ package br.eng.mosaic.pigeon.web.world
 					textArea.visible = false;
 				} 
 			}
+			
+			//if(Input.mousePressed&&playButton.collidePoint(playButton.x, playButton.y, Input.mouseX+42, Input.mouseY+42)){
+				//PigeonModel.getInstance().setUserMessage(textArea.text);
+			//}
 			
 			this.bringForward(cursor);
 			

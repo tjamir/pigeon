@@ -2,18 +2,14 @@
 package
 {
 	import br.eng.mosaic.pigeon.web.model.PigeonModel;
-	import br.eng.mosaic.pigeon.web.remote.FbHandler;
 	import br.eng.mosaic.pigeon.web.remote.Service;
 	import br.eng.mosaic.pigeon.web.remote.dto.UserInfo;
 	import br.eng.mosaic.pigeon.web.world.*;
 	
 	import com.adobe.serialization.json.JSON;
 	
-	import flash.display.LoaderInfo;
-	import flash.display.Sprite;
-	import flash.net.FileFilter;
+	import flash.net.URLRequest;
 	import flash.ui.Mouse;
-	import flash.ui.MouseCursor;
 	
 	import mx.rpc.Responder;
 	import mx.rpc.events.FaultEvent;
@@ -21,7 +17,6 @@ package
 	
 	import net.flashpunk.Engine;
 	import net.flashpunk.FP;
-	import net.flashpunk.World;
 	import net.flashpunk.utils.Input;
 	
 	public class CatchThePigeon extends Engine
@@ -51,6 +46,7 @@ package
 		{
 			super(760,600, 60, false);
 			Mouse.hide();
+			
 			FP.world = new TelaInicial;
 			var parameters:Object=this.root.loaderInfo.parameters;
 			//FP.world = new PigeonSelection;

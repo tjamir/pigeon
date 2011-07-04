@@ -4,6 +4,7 @@ package br.eng.mosaic.pigeon.web.world
 	import br.eng.mosaic.pigeon.web.entities.FacebookConfig;
 	import br.eng.mosaic.pigeon.web.entities.PlayButton;
 	import br.eng.mosaic.pigeon.web.entities.background.*;
+	import br.eng.mosaic.pigeon.web.model.PigeonModel;
 	
 	import com.facebook.graph.Facebook;
 	
@@ -34,6 +35,7 @@ package br.eng.mosaic.pigeon.web.world
 		
 		private var messageBorder:UserMessage;
 		private var textArea:PunkTextArea;
+		private var playButton:PlayButton;
 		
 		private var textLength:int = 140; //#CTP
 		private var hashtagLength:int = 4; //#CTP
@@ -53,7 +55,8 @@ package br.eng.mosaic.pigeon.web.world
 			
 			add(new Bg());
 			add(new OpeningScreen());
-			add(new PlayButton(FP.width/2 -33, FP.height*2/3 -18));
+			playButton = new PlayButton(FP.width/2 -33, FP.height*2/3 -18); 
+			add(playButton);
 			
 			messageBorder = new UserMessage();
 			messageBorder.x = FP.width/2 - 165;// - obj.width/2;
@@ -104,11 +107,12 @@ package br.eng.mosaic.pigeon.web.world
 		}
 		
 		override public function end():void{
-			if(textArea.text != initText){
+			/*if(textArea.text != initText){
 				CatchThePigeon(FP.engine).message=textArea.text;	
 			}else{
 				CatchThePigeon(FP.engine).message=null;
-			}
+			}*/
+			PigeonModel.getInstance().setUserMessage(textArea.text);
 		}
 	
 		
@@ -126,9 +130,6 @@ package br.eng.mosaic.pigeon.web.world
 		override public function update():void {
 			super.update();
 			
-			
-			mensagem = Input.keyString;
-			
 			if (textArea.text.length > (textLength - hashtagLength)){
 				textArea.text = textArea.text.substr(0, textLength - hashtagLength);
 			}
@@ -145,6 +146,11 @@ package br.eng.mosaic.pigeon.web.world
 					textArea.visible = false;
 				} 
 			}
+			
+			/*if(Input.mousePressed&&playButton.collidePoint(playButton.x, playButton.y, Input.mouseX+42, Input.mouseY+42)){
+				PigeonModel.getInstance().setUserMessage(textArea.text);
+			}*/
+			
 		}
 	}
 	

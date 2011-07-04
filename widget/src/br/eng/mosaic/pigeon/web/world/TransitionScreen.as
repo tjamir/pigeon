@@ -13,6 +13,7 @@ package br.eng.mosaic.pigeon.web.world
 	import br.eng.mosaic.pigeon.web.entities.background.UserMessage;
 	import br.eng.mosaic.pigeon.web.entities.background.selection.*;
 	import br.eng.mosaic.pigeon.web.entities.background.transition.*;
+	import br.eng.mosaic.pigeon.web.model.PigeonModel;
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -155,13 +156,13 @@ package br.eng.mosaic.pigeon.web.world
 			return null;
 		}
 		
-		private const initText:String="<Put Message Here>";
+		//private const initText:String="<Put Message Here>";
 		
 		override public function begin():void 
 		{
 			createBackground();
 			
-			textArea = new PunkTextArea(initText, FP.width/2 - 150, FP.height - 65, 300, 65, new WhiteAfterlife);
+			textArea = new PunkTextArea(PigeonModel.getInstance().getUserMessage(), FP.width/2 - 150, FP.height - 65, 300, 65, new WhiteAfterlife);
 			
 			add(textArea); 
 			
@@ -242,11 +243,12 @@ package br.eng.mosaic.pigeon.web.world
 		}
 		
 		override public function end():void{
-			if(textArea.text != initText){
+			/*if(textArea.text != initText){
 				CatchThePigeon(FP.engine).message=textArea.text;	
 			}else{
 				CatchThePigeon(FP.engine).message=null;
-			}
+			}*/
+			PigeonModel.getInstance().setUserMessage(textArea.text);
 		}
 	}
 	

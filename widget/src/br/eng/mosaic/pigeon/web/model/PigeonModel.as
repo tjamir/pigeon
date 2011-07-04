@@ -6,8 +6,9 @@ package br.eng.mosaic.pigeon.web.model
 	public class PigeonModel
 	{
 		//5 position array of TopFiveDTO objects
-		private var topFive:Array = new Array[5];
+		private var topFive:Array;
 		private var userID:String;
+		private var userMessage:String;
 	
 		private static var instance:PigeonModel = new PigeonModel();
 		
@@ -27,6 +28,14 @@ package br.eng.mosaic.pigeon.web.model
 		
 		public function getUserID():String{
 			return userID;
+		}
+		
+		public function getUserMessage():String{
+			return userMessage;
+		}
+		
+		public function setUserMessage(userMessage:String){
+			this.userMessage = userMessage;
 		}
 		
 		public function setTopFive(topFive:Array){
