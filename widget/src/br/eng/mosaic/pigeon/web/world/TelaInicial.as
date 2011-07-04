@@ -32,6 +32,7 @@ package br.eng.mosaic.pigeon.web.world
 		public var userTextEntity:Entity ;
 		public var cursor:Cursor=new Cursor;
 		
+		private var messageBorder:UserMessage;
 		private var textArea:PunkTextArea;
 		
 		private var textLength:int = 140; //#CTP
@@ -54,11 +55,16 @@ package br.eng.mosaic.pigeon.web.world
 			add(new OpeningScreen());
 			add(new PlayButton(FP.width/2 -33, FP.height*2/3 -18));
 			
-			obj = new UserMessage();
+			messageBorder = new UserMessage();
+			messageBorder.x = FP.width/2 - 165;// - obj.width/2;
+			messageBorder.y = FP.height - 100; //obj.height;
+			add(messageBorder);
+			
+			/*obj = new UserMessage();
 			obj.x = FP.width/2 - 165;// - obj.width/2;
 			obj.y = FP.height - 100; //obj.height;
-			add(obj);
-			
+			add(obj);*/
+						
 			add(new Avatar(150, 20));
 			add(new Avatar(250, 20));
 			add(new Avatar(350, 20));
@@ -129,8 +135,17 @@ package br.eng.mosaic.pigeon.web.world
 			
 			this.bringForward(cursor);
 			
+			//Show/hide the text area
+			if(Input.mousePressed&&messageBorder.collidePoint(messageBorder.x, messageBorder.y, Input.mouseX+42, Input.mouseY+42)){
+				messageBorder.setShow(!messageBorder.isShowed());
+				//Show
+				if (messageBorder.isShowed()){
+					textArea.visible = true;
+				} else { //Hide
+					textArea.visible = false;
+				} 
+			}
 		}
-		
 	}
 	
 }

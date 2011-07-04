@@ -57,6 +57,7 @@ package br.eng.mosaic.pigeon.web.world
 		
 		private var level:int;
 		
+		private var messageBorder:UserMessage;
 		private var textArea:PunkTextArea;
 		
 		//public static var cursor:Cursor=new Cursor;
@@ -76,10 +77,15 @@ package br.eng.mosaic.pigeon.web.world
 			add(new Bg());
 			add(new BgScreenTransition());
 			
-			obj = new UserMessage();
+			messageBorder = new UserMessage();
+			messageBorder.x = FP.width/2 - 165;// - obj.width/2;
+			messageBorder.y = FP.height - 100; //obj.height;
+			add(messageBorder);
+			
+			/*obj = new UserMessage();
 			obj.x = FP.width/2 - 165;
 			obj.y = FP.height - 100; 
-			add(obj);
+			add(obj);*/
 			
 			add (new Points(250,30));
 			add (getPigeon(250,19));
@@ -219,6 +225,17 @@ package br.eng.mosaic.pigeon.web.world
 			
 			if(Input.mousePressed&&backButton.collidePoint(backButton.x, backButton.y, Input.mouseX+44, Input.mouseY+44)){
 				FP.world = new PigeonSelection();
+			}
+			
+			//Show/hide the text area
+			if(Input.mousePressed&&messageBorder.collidePoint(messageBorder.x, messageBorder.y, Input.mouseX+42, Input.mouseY+42)){
+				messageBorder.setShow(!messageBorder.isShowed());
+				//Show
+				if (messageBorder.isShowed()){
+					textArea.visible = true;
+				} else { //Hide
+					textArea.visible = false;
+				} 
 			}
 			
 			this.bringForward(cursor);
